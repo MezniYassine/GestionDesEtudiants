@@ -1,0 +1,76 @@
+package com.tp.gestiondesetudiants;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DBHelper extends SQLiteOpenHelper {
+
+    private static final String DATABASE_NAME = "student.db";
+    private static final int DATABASE_VERSION = 1;
+
+    private static final String TABLE_STUDENTS = "students";
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_SURNAME = "surname";
+    private static final String COLUMN_MARK = "mark";
+
+    private static final String CREATE_TABLE_STUDENTS = "CREATE TABLE " + TABLE_STUDENTS + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_NAME + " TEXT,"
+            + COLUMN_SURNAME + " TEXT,"
+            + COLUMN_MARK + " DOUBLE" + ");";
+
+    public DBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_TABLE_STUDENTS);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTS);
+        onCreate(db);
+    }
+
+    // Méthode pour ajouter un étudiant
+    public long addStudent(Student student) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, student.getName());
+        values.put(COLUMN_SURNAME, student.getSurname());
+        values.put(COLUMN_MARK, student.getMark());
+        return db.insert(TABLE_STUDENTS, null, values);
+    }
+
+    // Méthode pour récupérer tous les étudiants
+    public List<Student> getAllStudents() {
+        List<Student> studentList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_STUDENTS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+                String surname = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SURNAME));
+                double mark = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MARK));
+
+                Student student = new Student(name, surname, mark);
+                student.setId(id); // Assurez-vous que setId() est public dans Student
+                studentList.add(student);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return studentList;
+    }
+}
