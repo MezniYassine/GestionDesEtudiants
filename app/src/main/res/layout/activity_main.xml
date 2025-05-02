@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:padding="25dp">
+    android:layout_marginTop="16dp"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/Title"
@@ -17,7 +18,7 @@
         android:layout_marginTop="26dp"
         android:fontFamily="@font/poppins"
         android:text="Students"
-        android:textColor="@color/black"
+        android:textColor="@color/orange"
         android:textSize="30dp"
         android:layout_marginStart="18dp"
         android:textStyle="bold"/>
@@ -37,10 +38,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="38dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="83dp"
         android:clickable="true"
-        app:backgroundTint="@color/grape"
+        app:backgroundTint="@color/orange"
         app:srcCompat="@drawable/baseline_add_24"
         app:tint="@color/white"
         tools:layout_editor_absoluteX="301dp"
