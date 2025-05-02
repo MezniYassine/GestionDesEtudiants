@@ -51,6 +51,44 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_STUDENTS, null, values);
     }
 
+    public Student getStudentById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                TABLE_STUDENTS,
+                new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_SURNAME, COLUMN_MARK},
+                COLUMN_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Student student = new Student(
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SURNAME)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MARK))
+            );
+            student.setId(id); // Set the ID from the database
+            cursor.close();
+            return student;
+        }
+        return null;
+    }
+
+    public int updateStudent(int id, String name, String surname, double mark) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_SURNAME, surname);
+        values.put(COLUMN_MARK, mark);
+
+        return db.update(
+                TABLE_STUDENTS,
+                values,
+                COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)}
+        );
+    }
+
     // Méthode pour récupérer tous les étudiants
     public List<Student> getAllStudents() {
         List<Student> studentList = new ArrayList<>();
