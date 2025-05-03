@@ -1,5 +1,6 @@
 package com.tp.gestiondesetudiants;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +19,15 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     private Context context;
     private List<Student> studentList;
+    private DBHelper dbHelper ;
 
 
 
-    public StudentAdapter(Context context, List<Student> studentList) {
+    public StudentAdapter(Context context, List<Student> studentList,DBHelper dbHelper) {
         this.context = context;
         this.studentList = studentList;
+        this.dbHelper = dbHelper ;
+
     }
 
     @NonNull
@@ -44,6 +49,22 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             intent.putExtra("student_id", student.getId());
             context.startActivity(intent);
         });
+        holder.deleteButton.setOnClickListener(v -> {
+            // Confirmation avant suppression
+            new AlertDialog.Builder(context)
+                    .setTitle("Delete")
+                    .setMessage("Would you like to delete this student ?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        // Suppression en base de données
+                        dbHelper.deleteStudent(student.getId());
+                        // Mise à jour de la liste
+                        studentList.remove(position);
+                        notifyItemRemoved(position);
+                        Toast.makeText(context, "Student deleted successfully", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        });
     }
 
     @Override
@@ -60,12 +81,14 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     public static class StudentViewHolder extends RecyclerView.ViewHolder {
         TextView name, surname, mark;
+        ImageView deleteButton;
 
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.NameStudent);
             surname = itemView.findViewById(R.id.SurnameStudent);
             mark = itemView.findViewById(R.id.MarkStudent);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
 }

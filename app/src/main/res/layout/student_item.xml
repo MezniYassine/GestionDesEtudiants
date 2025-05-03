@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="StudentName"
-                android:textColor="@color/orange"
+                android:textColor="@color/primary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
             <ImageView
@@ -33,8 +33,15 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="36dp"
                 android:src="@drawable/baseline_create_24"
+                />
+            <ImageView
+                android:id="@+id/deleteButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/baseline_delete_24"
                 />
         </RelativeLayout>
 

@@ -89,6 +89,16 @@ public class DBHelper extends SQLiteOpenHelper {
         );
     }
 
+    public void deleteStudent(int studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(
+                TABLE_STUDENTS,
+                COLUMN_ID + " = ?",
+                new String[]{String.valueOf(studentId)}
+        );
+        db.close();
+    }
+
     // Méthode pour récupérer tous les étudiants
     public List<Student> getAllStudents() {
         List<Student> studentList = new ArrayList<>();

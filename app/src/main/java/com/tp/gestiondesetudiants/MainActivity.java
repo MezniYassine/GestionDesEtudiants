@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Charger les données
         List<Student> students = dbHelper.getAllStudents();
-        adapter = new StudentAdapter(this, students);
+        adapter = new StudentAdapter(this, students,dbHelper);
         recyclerView.setAdapter(adapter);
     }
 
