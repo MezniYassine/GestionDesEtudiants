@@ -33,11 +33,24 @@ public class AddStudentActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(v -> {
             String name = nameInput.getText().toString();
             String surname = surnameInput.getText().toString();
-            double mark = Double.parseDouble(markInput.getText().toString());
-            Student student = new Student(name, surname, mark);
-            dbHelper.addStudent(student);
-            finish();
-            Toast.makeText(this, "Student added successfully", Toast.LENGTH_SHORT).show();
+            String markStr = markInput.getText().toString().trim();
+            if (name.isEmpty() || surname.isEmpty() || markStr.isEmpty()) {
+                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            try {
+                double mark = Double.parseDouble(markStr);
+                if (mark > 20 || mark < 0) {
+                    Toast.makeText(this, "invalid mark value ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Student student = new Student(name, surname, mark);
+                dbHelper.addStudent(student);
+                finish();
+                Toast.makeText(this, "Student added successfully", Toast.LENGTH_SHORT).show();
+            }catch (NumberFormatException e) {
+                Toast.makeText(this, "Invalid mark value", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

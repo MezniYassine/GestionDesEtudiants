@@ -52,8 +52,13 @@ public class UpdateActivity extends AppCompatActivity {
                 return;
             }
 
+
             try {
                 double mark = Double.parseDouble(markStr);
+                if (mark >20 || mark<0){
+                    Toast.makeText(this, "invalid mark value ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 dbHelper.updateStudent(studentId, name, surname, mark);
                 Toast.makeText(this, "Student Updated", Toast.LENGTH_SHORT).show();
                 finish(); // Go back to MainActivity
