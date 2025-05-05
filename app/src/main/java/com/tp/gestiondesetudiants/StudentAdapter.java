@@ -50,14 +50,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             context.startActivity(intent);
         });
         holder.deleteButton.setOnClickListener(v -> {
-            // Confirmation avant suppression
             new AlertDialog.Builder(context)
                     .setTitle("Delete")
                     .setMessage("Would you like to delete this student ?")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        // Suppression en base de données
                         dbHelper.deleteStudent(student.getId());
-                        // Mise à jour de la liste
                         studentList.remove(position);
                         notifyItemRemoved(position);
                         Toast.makeText(context, "Student deleted successfully", Toast.LENGTH_SHORT).show();
@@ -72,7 +69,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         return studentList.size();
     }
 
-    // Optional: Méthode pour mettre à jour la liste
     public void updateData(List<Student> newStudents) {
         studentList.clear();
         studentList.addAll(newStudents);

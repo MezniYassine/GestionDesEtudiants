@@ -41,7 +41,6 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Méthode pour ajouter un étudiant
     public long addStudent(Student student) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -67,7 +66,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SURNAME)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MARK))
             );
-            student.setId(id); // Set the ID from the database
+            student.setId(id);
             cursor.close();
             return student;
         }
@@ -99,7 +98,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Méthode pour récupérer tous les étudiants
     public List<Student> getAllStudents() {
         List<Student> studentList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_STUDENTS;
@@ -114,7 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 double mark = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MARK));
 
                 Student student = new Student(name, surname, mark);
-                student.setId(id); // Assurez-vous que setId() est public dans Student
+                student.setId(id);
                 studentList.add(student);
             } while (cursor.moveToNext());
         }

@@ -28,27 +28,21 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Initialisation de la base de données
         dbHelper = new DBHelper(this);
 
-        // Bouton d'ajout
         FloatingActionButton addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddStudentActivity.class);
             startActivity(intent);
         });
 
-        // Initialisation du RecyclerView
         recyclerView = findViewById(R.id.studentRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Charger les données
         List<Student> students = dbHelper.getAllStudents();
         adapter = new StudentAdapter(this, students,dbHelper);
         recyclerView.setAdapter(adapter);
     }
 
-    // Optionnel : Rafraîchir la liste après ajout
     @Override
     protected void onResume() {
         super.onResume();

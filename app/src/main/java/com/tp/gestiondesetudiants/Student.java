@@ -10,10 +10,9 @@ public class Student {
         this.name = name;
         this.surname = surname;
         this.mark = mark;
-        this.id = -1; // Valeur par défaut avant insertion en base
+        this.id = -1;
     }
 
-    // Getters et setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -24,5 +23,5 @@ public class Student {
     public void setMark(double mark) { this.mark = mark; }
 
     public int getId() { return id; }
-    public void setId(int id) { this.id = id; } // Ajouté
+    public void setId(int id) { this.id = id; }
 }

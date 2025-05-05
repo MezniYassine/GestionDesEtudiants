@@ -61,7 +61,7 @@ public class UpdateActivity extends AppCompatActivity {
                 }
                 dbHelper.updateStudent(studentId, name, surname, mark);
                 Toast.makeText(this, "Student Updated", Toast.LENGTH_SHORT).show();
-                finish(); // Go back to MainActivity
+                finish();
             } catch (NumberFormatException e) {
                 Toast.makeText(this, "Invalid mark value", Toast.LENGTH_SHORT).show();
             }
