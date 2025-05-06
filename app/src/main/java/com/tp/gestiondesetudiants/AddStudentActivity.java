@@ -41,7 +41,7 @@ public class AddStudentActivity extends AppCompatActivity {
             try {
                 double mark = Double.parseDouble(markStr);
                 if (mark > 20 || mark < 0) {
-                    Toast.makeText(this, "invalid mark value ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Value must be between 0 and 20 ", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Student student = new Student(name, surname, mark);

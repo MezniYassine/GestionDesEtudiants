@@ -44,7 +44,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         holder.surname.setText(student.getSurname());
         holder.mark.setText(String.valueOf(student.getMark()));
 
-        holder.itemView.setOnClickListener(v -> {
+        holder.updateButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, UpdateActivity.class);
             intent.putExtra("student_id", student.getId());
             context.startActivity(intent);
@@ -78,6 +78,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     public static class StudentViewHolder extends RecyclerView.ViewHolder {
         TextView name, surname, mark;
         ImageView deleteButton;
+        ImageView updateButton;
 
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +86,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             surname = itemView.findViewById(R.id.SurnameStudent);
             mark = itemView.findViewById(R.id.MarkStudent);
             deleteButton = itemView.findViewById(R.id.deleteButton);
+            updateButton = itemView.findViewById(R.id.updateButton);
         }
     }
 }
